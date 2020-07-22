@@ -35,7 +35,6 @@ public class ListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         doData();
-        System.out.println("------------------" + dataList.size());
 
         myAdapter = new MyAdapter();
         recyclerView.setAdapter(myAdapter);
