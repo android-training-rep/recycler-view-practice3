@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -56,12 +57,14 @@ public class ListActivity extends AppCompatActivity {
         class ItemViewHolder extends RecyclerView.ViewHolder {
             public View itemView;
             public TextView title, description, number;
+//            public ImageView imageView;
             public ItemViewHolder(View v) {
                 super(v);
                 itemView = v;
                 title = itemView.findViewById(R.id.item_title);
                 description = itemView.findViewById(R.id.item_description);
                 number = itemView.findViewById(R.id.item_number);
+//                imageView = itemView.findViewById(R.id.item_image);
             }
         }
 
