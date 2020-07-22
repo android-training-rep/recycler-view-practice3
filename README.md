@@ -1,2 +1,2 @@
-![avatar](/result/first.png)
-![avatar](/result/recycleView.png)
+### 在recycler-view-practice1的基础上进行修改
+![avatar](/result/result.png)

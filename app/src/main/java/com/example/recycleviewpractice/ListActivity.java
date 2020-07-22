@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,43 +41,22 @@ public class ListActivity extends AppCompatActivity {
     }
 
     public void doData() {
+        dataList.add(new Data(Data.TYPE_HEADER, "This is header", null, 0));
         for (int i = 0; i < 15; i++) {
             int number = i+1;
             String title = "Title " + number;
             String description = "Description " + number;
-            Data data = new Data(title, description, number);
+            Data data = new Data(Data.TYPE_ITEM, title, description, number);
             dataList.add(data);
         }
     }
 
-    class Data{
-        public String title;
-        public String description;
-        public int number;
+    class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-        public Data(String title, String description, int number) {
-            this.title = title;
-            this.description = description;
-            this.number = number;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-        public String getDescription() {
-            return description;
-        }
-        public int getNumber() {
-            return number;
-        }
-    }
-
-    class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-
-        class MyViewHolder extends RecyclerView.ViewHolder {
+        class ItemViewHolder extends RecyclerView.ViewHolder {
             public View itemView;
             public TextView title, description, number;
-            public MyViewHolder(View v) {
+            public ItemViewHolder(View v) {
                 super(v);
                 itemView = v;
                 title = itemView.findViewById(R.id.item_title);
@@ -86,19 +65,55 @@ public class ListActivity extends AppCompatActivity {
             }
         }
 
+        class HeaderViewHolder extends RecyclerView.ViewHolder {
+            public View itemView;
+            public TextView title;
+            public HeaderViewHolder(View v) {
+                super(v);
+                itemView = v;
+                title = itemView.findViewById(R.id.item_title);
+            }
+        }
+
         @NonNull
         @Override
-        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
-            MyViewHolder vh = new MyViewHolder(itemView);
-            return vh;
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View itemView;
+            switch (viewType) {
+                case Data.TYPE_HEADER:
+                    itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_header, parent, false);
+                    return new HeaderViewHolder(itemView);
+                case Data.TYPE_ITEM:
+                    itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
+                    return new ItemViewHolder(itemView);
+            }
+            return null;
+        }
+        @Override
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+            Data currentData = dataList.get(position);
+            switch (currentData.getType()) {
+                case Data.TYPE_HEADER:
+                    ((HeaderViewHolder)holder).title.setText(currentData.getTitle());
+                    break;
+                case Data.TYPE_ITEM:
+                    ((ItemViewHolder)holder).title.setText(currentData.getTitle());
+                    ((ItemViewHolder)holder).description.setText(currentData.getDescription());
+                    ((ItemViewHolder)holder).number.setText("" + currentData.getNumber());
+                    break;
+            }
         }
 
         @Override
-        public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
-            holder.title.setText(dataList.get(position).getTitle());
-            holder.description.setText(dataList.get(position).getDescription());
-            holder.number.setText("" + dataList.get(position).getNumber());
+        public int getItemViewType(int position) {
+            switch (dataList.get(position).getType()) {
+                case 0:
+                    return Data.TYPE_ITEM;
+                case 1:
+                    return Data.TYPE_HEADER;
+                default:
+                    return -1;
+            }
         }
 
         @Override
