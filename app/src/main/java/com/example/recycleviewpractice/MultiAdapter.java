@@ -7,12 +7,10 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 import java.util.List;
 
 public class MultiAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     List<Data> dataList;
-    private RequestManager requestManager;
 
     public MultiAdapter(List<Data> dataList){
         this.dataList = dataList;
@@ -27,7 +25,6 @@ public class MultiAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_header, parent, false);
                 return new HeaderViewHolder(itemView);
             case Data.TYPE_ITEM:
-                requestManager = Glide.with(parent.getContext());
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
                 return new ItemViewHolder(itemView);
         }
@@ -45,7 +42,8 @@ public class MultiAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ((ItemViewHolder)holder).description.setText(currentData.getDescription());
                 ((ItemViewHolder)holder).number.setText("" + currentData.getNumber());
                 ImageView imageView = ((ItemViewHolder)holder).imageView;
-//                requestManager.load(currentData.getAvatar()).centerInside().into(imageView);
+
+                Glide.with(imageView).load(currentData.getAvatar()).into(imageView);
                 break;
         }
     }
