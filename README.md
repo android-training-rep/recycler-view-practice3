@@ -1,8 +1,11 @@
 ### 在recycler-view-practice2的基础上进行修改
 
+### 断开VPN，模拟器能正常联网，加载图片成功
+![avatar](/result/result-image.png)
+
 ### 加载图片不成功报错
 
-正在找解决方法
+![avatar](/result/result.png)
 
 ```
 W/Glide: Failed to find GeneratedAppGlideModule. You should include an annotationProcessor compile dependency on com.github.bumptech.glide:compiler in your application and a @GlideModule annotated AppGlideModule implementation or LibraryGlideModules will be silently ignored
@@ -25,4 +28,3 @@ W/Glide: Load failed for https://loremflickr.com/180/180?lock=2 with size [131x1
           Cause (1 of 1): class java.net.UnknownHostException: Unable to resolve host "loremflickr.com": No address associated with hostname
 I/Glide: Root cause (1 of 1)
 ```
-![avatar](/result/result.png)
